@@ -7,6 +7,8 @@ variable "subscription_id" {
   # we can pass the sun_id as an environment variable TF_VAR_subscription_id
   # cmd is :- export TF_VAR_subscription_id="<sub_id>"
   # if you want to delete the env var use: unset TF_VAR_subscription_id
+  description = "Azure subscription ID"
+  type        = string
 }
 
 variable "location" {
