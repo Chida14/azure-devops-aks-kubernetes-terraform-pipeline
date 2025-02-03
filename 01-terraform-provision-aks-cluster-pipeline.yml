@@ -53,7 +53,7 @@ stages:
               backendAzureRmStorageAccountName: 'cmandolk'
               backendAzureRmStorageAccountSku: 'Locally-redundant storage (LRS)'
               backendAzureRmContainerName: 'tfstatefiles'
-              backendAzureRmKey: 'aks-base.tfstate'
+              backendAzureRmKey: 'aks-$(DEV_ENVIRONMENT).tfstate'
               allowTelemetryCollection: false
 
           - task: TerraformCLI@2
