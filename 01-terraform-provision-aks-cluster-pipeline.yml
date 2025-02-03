@@ -9,7 +9,7 @@ pool:
 
 # Define variables for Environments
 variables: 
-- name: TF_VAR_subscription_id
+- name: SUBSCRIPTION_ID
 - name: DEV_ENVIRONMENT
   value: dev
 - name: QA_ENVIRONMENT
@@ -110,7 +110,7 @@ stages:
                    command: 'plan'
                    workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
                    environmentServiceName: 'ARM-SVC-CON'
-                   commandOptions: '-var ssh_public_key=$(sshkey.secureFilePath) -out $(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out -var environment=$(DEV_ENVIRONMENT) $(TF_VAR_subscription_id)'
+                   commandOptions: '-var ssh_public_key=$(sshkey.secureFilePath) -out $(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out -var environment=$(DEV_ENVIRONMENT) export TF_VAR_subscription_id=$(SUBSCRIPTION_ID)'
                    allowTelemetryCollection: false
     
                - task: TerraformCLI@2
