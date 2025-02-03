@@ -123,6 +123,7 @@ stages:
                    allowTelemetryCollection: true
     
       - deployment: DeployQAAKSCluster
+        dependsOn: DeployDevAKSCluster
         displayName: Deploy-QA-AKS-Cluster
         environment: $(QA_ENVIRONMENT)
         strategy: 
