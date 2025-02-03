@@ -105,7 +105,7 @@ stages:
                    command: 'plan'
                    workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
                    environmentServiceName: 'ARM-SVC-CON'
-                   commandOptions: '-var ssh_public_key=$(sshkey.secureFilePath)  -out $(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out-var environment=$(DEV_ENVIRONMENT)'
+                   commandOptions: '-var ssh_public_key=$(sshkey.secureFilePath) -out $(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out -var environment=$(DEV_ENVIRONMENT)'
                    allowTelemetryCollection: false
     
                - task: TerraformCLI@2
