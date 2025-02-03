@@ -26,10 +26,12 @@ stages:
               artifact: 'terraform-manifests-out'
               publishLocation: 'pipeline'
               
-          - task: TerraformInstaller@2
-            displayName: Terraform Install
-            inputs:
-              terraformVersion: 'latest'
+        # Installed terraform manually on the agent
+          # - task: TerraformInstaller@2
+          #   displayName: Terraform Install
+          #   inputs:
+          #     terraformVersion: 'latest'
+
 
           - task: TerraformCLI@2
             displayName: Terraform Init
