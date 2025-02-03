@@ -9,7 +9,7 @@ pool:
 
 # Define variables for Environments
 variables: 
-- name: SUBSCRIPTION_ID
+- group: SUBSCRIPTION_ID
 - name: DEV_ENVIRONMENT
   value: dev
 - name: QA_ENVIRONMENT
