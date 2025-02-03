@@ -121,3 +121,48 @@ stages:
                    environmentServiceName: 'ARM-SVC-CON'
                    commandOptions: '$(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                    allowTelemetryCollection: true
+    
+      - deployment: DeployQAAKSCluster
+        displayName: Deploy-QA-AKS-Cluster
+        environment: $(QA_ENVIRONMENT)
+        strategy: 
+         runOnce:
+           deploy:
+             steps:
+               - task: DownloadSecureFile@1
+                 name: sshkey
+                 displayName: Download SSh Key
+                 inputs:
+                   secureFile: 'aksprodsshkey.pub'
+
+               - task: TerraformCLI@2
+                 displayName: Terraform Init
+                 inputs:
+                   command: 'init'
+                   workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
+                   commandOptions: '-reconfigure'
+                   backendType: 'azurerm'
+                   backendServiceArm: 'ARM-SVC-CON'
+                   backendAzureRmResourceGroupName: 'aus-east-storage_account'
+                   backendAzureRmStorageAccountName: 'cmandolk'
+                   backendAzureRmContainerName: 'tfstatefiles'
+                   backendAzureRmKey: 'aks-$(QA_ENVIRONMENT).tfstate'
+                   allowTelemetryCollection: false
+
+               - task: TerraformCLI@2
+                 displayName: Terraform Plan
+                 inputs:
+                   command: 'plan'
+                   workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
+                   environmentServiceName: 'ARM-SVC-CON'
+                   commandOptions: '-var ssh_public_key=$(sshkey.secureFilePath) -out $(Pipeline.Workspace)/terraform-manifests-out/$(QA_ENVIRONMENT)-$(Build.BuildId).out -var environment=$(QA_ENVIRONMENT) -var subscription_id=$(SUBSCRIPTION_ID)'
+                   allowTelemetryCollection: false
+    
+               - task: TerraformCLI@2
+                 displayName: Terraform Apply
+                 inputs:
+                   command: 'apply'
+                   workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
+                   environmentServiceName: 'ARM-SVC-CON'
+                   commandOptions: '$(Pipeline.Workspace)/terraform-manifests-out/$(QA_ENVIRONMENT)-$(Build.BuildId).out'
+                   allowTelemetryCollection: true
