@@ -90,8 +90,7 @@ stages:
                  displayName: Terraform Init
                  inputs:
                    command: 'init'
-                   workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
-                   commandOptions: 'init -reconfigure'
+                   workingDirectory: '''$(Pipeline.Workspace)/terraform-manifests-out'''
                    backendType: 'azurerm'
                    backendServiceArm: 'ARM-SVC-CON'
                    backendAzureRmResourceGroupName: 'aus-east-storage_account'
