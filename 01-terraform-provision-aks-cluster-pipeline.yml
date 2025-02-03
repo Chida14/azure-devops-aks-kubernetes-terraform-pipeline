@@ -113,11 +113,11 @@ stages:
                    commandOptions: '-var ssh_public_key=$(sshkey.secureFilePath) -out $(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out -var environment=$(DEV_ENVIRONMENT) -var subscription_id=$(SUBSCRIPTION_ID)'
                    allowTelemetryCollection: false
     
-               - task: TerraformCLI@2
-                 displayName: Terraform Apply
-                 inputs:
-                    command: 'plan'
-                    workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
-                    environmentServiceName: 'ARM-SVC-CON'
-                    commandOptions: '$(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
-                    allowTelemetryCollection: true
+              #  - task: TerraformCLI@2
+              #    displayName: Terraform Apply
+              #    inputs:
+              #       command: 'plan'
+              #       workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
+              #       environmentServiceName: 'ARM-SVC-CON'
+              #       commandOptions: '$(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
+              #       allowTelemetryCollection: true
