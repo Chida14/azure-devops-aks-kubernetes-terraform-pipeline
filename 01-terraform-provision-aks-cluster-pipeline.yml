@@ -89,10 +89,6 @@ stages:
                  displayName: Download SSh Key
                  inputs:
                    secureFile: 'aksprodsshkey.pub'
-               
-               - task: CmdLine@2
-                 inputs:
-                  script: 'export TF_VAR_subscription_id=$(SUBSCRIPTION_ID)'
 
                - task: TerraformCLI@2
                  displayName: Terraform Init
@@ -114,7 +110,7 @@ stages:
                    command: 'plan'
                    workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
                    environmentServiceName: 'ARM-SVC-CON'
-                   commandOptions: '-var ssh_public_key=$(sshkey.secureFilePath) -out $(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out -var environment=$(DEV_ENVIRONMENT)'
+                   commandOptions: '-var ssh_public_key=$(sshkey.secureFilePath) -out $(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out -var environment=$(DEV_ENVIRONMENT) -var subscription_id=$(SUBSCRIPTION_ID)'
                    allowTelemetryCollection: false
     
                - task: TerraformCLI@2
